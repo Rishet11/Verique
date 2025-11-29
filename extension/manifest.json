@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "TrustLens - AI Content Verifier",
+  "name": "Verique - AI Content Verifier",
   "description": "Instantly verify claims on any webpage with AI-powered fact-checking",
   "version": "1.0.0",
   "icons": {
@@ -24,7 +24,7 @@
   ],
   "host_permissions": [
     "http://localhost:8000/*",
-    "https://api.trustlens.io/*"
+    "https://api.verique.io/*"
   ],
   "background": {
     "service_worker": "background.js"

@@ -1,4 +1,4 @@
-// TrustLens Popup Script
+// Verique Popup Script
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Elements

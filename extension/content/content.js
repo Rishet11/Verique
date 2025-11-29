@@ -1,4 +1,4 @@
-// TrustLens Content Script
+// Verique Content Script
 
 // Verdict configurations
 const VERDICT_CONFIG = {

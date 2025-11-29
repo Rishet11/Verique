@@ -1,4 +1,4 @@
-// TrustLens Background Service Worker
+// Verique Background Service Worker
 
 const API_BASE = 'http://127.0.0.1:8000';
 
@@ -6,7 +6,7 @@ const API_BASE = 'http://127.0.0.1:8000';
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: 'verify-selection',
-    title: 'Verify with TrustLens',
+    title: 'Verify with Verique',
     contexts: ['selection']
   });
   
@@ -91,7 +91,7 @@ async function verifyContent(tabId, text) {
 }
 
 async function verifyContentAsync(text, url = null) {
-  const response = await fetch(`${API_BASE}/v1/verify`, {
+  const response = await fetch(`${API_BASE}/api/v1/verify`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
