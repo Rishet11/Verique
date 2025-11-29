@@ -17,14 +17,18 @@ class Settings(BaseSettings):
     # API Configuration
     API_HOST: str = "0.0.0.0"
     API_PORT: int = 8000
-    API_PREFIX: str = "/v1"
+    API_PREFIX: str = "/api/v1"
     SECRET_KEY: str = "change-me-in-production"
     
     # CORS
     CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
         "http://localhost:8000",
         "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
+        "http://127.0.0.1:3002",
         "http://127.0.0.1:8000",
     ]
     

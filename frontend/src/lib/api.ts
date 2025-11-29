@@ -36,7 +36,7 @@ export async function verifyUrl(url: string, vertical?: string): Promise<Verific
     vertical: vertical as any,
   };
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/verify-url`, {
+  const response = await fetch(`${API_BASE_URL}/api/v1/verify/url`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

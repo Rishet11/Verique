@@ -138,26 +138,32 @@ TrustLens is an AI-powered multi-agent system that adds a transparent "trust ove
 ```powershell
 cd backend
 
-# Edit the .env file and add your GROQ_API_KEY
-notepad .env
+# 1. Create & Activate Virtual Environment
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 
-# Install dependencies
+# 2. Install Dependencies
 pip install -r requirements.txt
 
-# Set Python path and run server
-$env:PYTHONPATH = (Get-Location).Path
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+# 3. Run the Server
+python -m uvicorn app.main:app --reload
 ```
 
-The backend uses **SQLite** by default (no database setup needed!) and **DuckDuckGo** for free web search.
+The backend will start at `http://127.0.0.1:8000`.
 
-### 3️⃣ Frontend Setup (Optional)
+### 3️⃣ Frontend Setup
 
 ```powershell
 cd frontend
+
+# 1. Install Dependencies
 npm install
+
+# 2. Run Development Server
 npm run dev
 ```
+
+The frontend will start at `http://localhost:3000` (or `3001` if 3000 is busy).
 
 ### 4️⃣ Chrome Extension
 
