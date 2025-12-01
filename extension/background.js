@@ -91,24 +91,31 @@ async function verifyContent(tabId, text) {
 }
 
 async function verifyContentAsync(text, url = null) {
-  const response = await fetch(`${API_BASE}/api/v1/verify`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      text: text,
-      url: url,
-      vertical: 'general'
-    })
-  });
+  try {
+    const response = await fetch(`${API_BASE}/api/v1/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: text,
+        url: url,
+        vertical: 'general'
+      })
+    });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Verification failed');
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.detail || `Verification failed (${response.status})`);
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error.message.includes('Failed to fetch')) {
+      throw new Error('Could not connect to TrustLens backend. Is it running?');
+    }
+    throw error;
   }
-
-  return response.json();
 }
 
 async function checkApiStatus() {

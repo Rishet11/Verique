@@ -33,7 +33,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   verifyPageBtn.addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
+    if (!tab.url.startsWith('http')) {
+      showError('Verique only works on web pages (http/https).');
+      return;
+    }
+
     chrome.tabs.sendMessage(tab.id, { action: 'getPageContent' }, async (response) => {
+      if (chrome.runtime.lastError) {
+        showError('Please refresh the page to use the extension.');
+        return;
+      }
+      
       if (response && response.content) {
         await verifyContent(response.content);
       } else {
@@ -46,7 +56,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   verifySelectionBtn.addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
+    if (!tab.url.startsWith('http')) {
+      showError('Verique only works on web pages (http/https).');
+      return;
+    }
+
     chrome.tabs.sendMessage(tab.id, { action: 'getSelection' }, async (response) => {
+      if (chrome.runtime.lastError) {
+        showError('Please refresh the page to use the extension.');
+        return;
+      }
+
       if (response && response.text) {
         await verifyContent(response.text);
       } else {
