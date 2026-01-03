@@ -7,11 +7,13 @@ import { Source } from '@/lib/types';
 interface SourceComparisonProps {
   supporting: Source[];
   contradicting: Source[];
+  reasoning?: string;
 }
 
 export function SourceComparison({ 
   supporting, 
-  contradicting 
+  contradicting,
+  reasoning
 }: SourceComparisonProps) {
   if (supporting.length === 0 && contradicting.length === 0) {
     return null;
@@ -22,21 +24,37 @@ export function SourceComparison({
   return (
     <div className="mt-4 space-y-3">
       {hasConflict && (
-        <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="flex items-start gap-2">
-            <span className="text-lg">⚠️</span>
-            <div className="flex-1">
-              <div className="font-semibold text-yellow-900 text-sm">Sources Disagree</div>
-              <div className="text-xs text-yellow-700 mt-1">
-                We found evidence both supporting and contradicting this claim.
-                This is normal for complex or evolving topics.
+        <div className="p-4 bg-slate-900 text-slate-100 rounded-xl shadow-lg border border-slate-800">
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2 text-yellow-500 font-bold tracking-wider text-xs uppercase">
+              <span className="text-sm">⚠️</span> SOURCES DISAGREE
+            </div>
+            
+            <div className="space-y-4">
+              <div className="text-xs text-slate-400 font-mono">
+                <span className="text-green-400 font-bold">Supporting ({supporting.slice(0, 2).map(s => getDomainFromUrl(s.url)).join(', ')}):</span>
+                <p className="mt-1 line-clamp-2 italic">"{supporting[0]?.snippet}"</p>
               </div>
+
+              <div className="text-xs text-slate-400 font-mono">
+                <span className="text-red-400 font-bold">Contradicting ({contradicting.slice(0, 2).map(s => getDomainFromUrl(s.url)).join(', ')}):</span>
+                <p className="mt-1 line-clamp-2 italic">"{contradicting[0]?.snippet}"</p>
+              </div>
+
+              {reasoning && (
+                <div className="pt-3 border-t border-slate-800">
+                  <div className="text-xs font-bold text-slate-200 mb-1 font-mono uppercase tracking-tight">Our take:</div>
+                  <div className="text-sm text-slate-300 leading-relaxed font-mono">
+                    {reasoning}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      {supporting.length > 0 && (
+      {!hasConflict && supporting.length > 0 && (
         <SourceList 
           title="Supporting Evidence" 
           sources={supporting} 
@@ -44,12 +62,28 @@ export function SourceComparison({
         />
       )}
 
-      {contradicting.length > 0 && (
+      {!hasConflict && contradicting.length > 0 && (
         <SourceList 
           title="Contradicting Evidence" 
           sources={contradicting} 
           color="red" 
         />
+      )}
+      
+      {/* If there's a conflict, we still show the source lists below the banner for utility */}
+      {hasConflict && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 opacity-60 hover:opacity-100 transition-opacity">
+          <SourceList 
+            title="Supporting" 
+            sources={supporting} 
+            color="green" 
+          />
+          <SourceList 
+            title="Contradicting" 
+            sources={contradicting} 
+            color="red" 
+          />
+        </div>
       )}
     </div>
   );

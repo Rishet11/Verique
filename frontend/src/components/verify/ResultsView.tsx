@@ -344,6 +344,7 @@ function ClaimCard({
               <SourceComparison 
                 supporting={claim.sources.supporting} 
                 contradicting={claim.sources.contradicting} 
+                reasoning={claim.reasoning}
               />
 
               {/* Metadata */}
