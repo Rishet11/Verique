@@ -3,6 +3,7 @@
 import { ExternalLink } from 'lucide-react';
 import { getDomainFromUrl } from '@/lib/utils';
 import { Source } from '@/lib/types';
+import { SourceReputationBadge } from './SourceReputationBadge';
 
 interface SourceComparisonProps {
   supporting: Source[];
@@ -113,17 +114,19 @@ function SourceList({ title, sources, color }: {
               rel="noopener noreferrer"
               className="block hover:bg-white/50 p-2 rounded transition-colors"
             >
-              <div className="flex items-center justify-between gap-2 mb-1">
+                <div className="flex items-center justify-between gap-2 mb-1">
                 <div className="flex items-center gap-1">
                   <span className="text-sm font-medium hover:underline">
                     {getDomainFromUrl(source.url)}
                   </span>
                   <ExternalLink className="h-3 w-3 opacity-50" />
                 </div>
-                {source.domain_score && (
-                  <span className="text-xs opacity-75">
-                    Trust: {Math.round(source.domain_score * 100)}%
-                  </span>
+                {source.domain_score !== undefined && (
+                  <SourceReputationBadge 
+                    domain={getDomainFromUrl(source.url)} 
+                    score={source.domain_score} 
+                    compact 
+                  />
                 )}
               </div>
               <p className="text-xs opacity-90 line-clamp-2">
