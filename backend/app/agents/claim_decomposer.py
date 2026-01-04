@@ -166,6 +166,14 @@ class ClaimDecomposerAgent:
             start = claim.get("span_start", 0)
             end = claim.get("span_end", 0)
             
+            # Apply -1 offset to fix LLM position calculation
+            start = max(0, start - 1)
+            end = max(0, end - 1)
+            
+            # Update claim with corrected positions
+            claim["span_start"] = start
+            claim["span_end"] = end
+            
             # Skip invalid spans
             if end <= start:
                 continue

@@ -92,7 +92,7 @@ async function verifyContent(tabId, text) {
 
 async function verifyContentAsync(text, url = null) {
   try {
-    const response = await fetch(`${API_BASE}/api/v1/verify`, {
+    const response = await fetch(`${API_BASE}/v1/verify`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
